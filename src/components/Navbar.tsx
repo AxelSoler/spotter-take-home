@@ -3,7 +3,7 @@ import NavItem from "./NavItem";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between px-8 py-2 shadow fixed top-0 left-0 right-0 z-50 border-b border-gray-200">
+    <nav className="flex items-center justify-between px-8 py-2 shadow fixed top-0 left-0 right-0 z-50 border-b border-gray-300">
       <div className="flex gap-8">
         <NavItem icon={<FaShoppingCart size={16} />} label="Travels" flexDirection="flex-row" />
         <NavItem icon={<FaGlobe size={16} />} label="Explore" flexDirection="flex-row" />
