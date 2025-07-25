@@ -22,7 +22,7 @@ export default function Header() {
           className="w-full h-full"
         />
       </picture>
-      <p className="text-6xl text-center">Travels</p>
+      <p className="text-4xl md:text-6xl text-center">Travels</p>
       <div className="flex items-center mx-auto bg-white px-4 py-3 rounded-full shadow-md w-full max-w-xl mt-10">
         <FaSearch className="text-gray-500 mr-2" />
         <input
@@ -32,7 +32,7 @@ export default function Header() {
         />
       </div>
 
-      <div className="flex justify-center gap-10 mt-4">
+      <div className="flex justify-center gap-5 mt-4">
         <NavItem icon={<FaGlobe size={20} />} label="Explore" />
         <NavItem icon={<FaPlane size={20} />} label="Flights" />
         <NavItem icon={<FaHotel size={20} />} label="Hotels" />

@@ -4,12 +4,15 @@ import NavItem from "./NavItem";
 export default function Navbar() {
   return (
     <nav className="flex items-center justify-between px-8 py-2 shadow fixed top-0 left-0 right-0 z-50 border-b border-gray-300">
-      <div className="flex gap-8">
-        <NavItem icon={<FaShoppingCart size={16} />} label="Travels" flexDirection="flex-row" />
-        <NavItem icon={<FaGlobe size={16} />} label="Explore" flexDirection="flex-row" />
-        <NavItem icon={<FaPlane size={16} />} label="Flights" flexDirection="flex-row" />
-        <NavItem icon={<FaHotel size={16} />} label="Hotels" flexDirection="flex-row" />
-        <NavItem icon={<FaHome size={16} />} label="Vacation rentals" flexDirection="flex-row" />
+      <div className="flex gap-4 items-center">
+        <p className="text-xl">Axel</p>
+        <div className="hidden md:flex gap-3">
+          <NavItem icon={<FaShoppingCart size={16} />} label="Travels" flexDirection="flex-row" />
+          <NavItem icon={<FaGlobe size={16} />} label="Explore" flexDirection="flex-row" />
+          <NavItem icon={<FaPlane size={16} />} label="Flights" flexDirection="flex-row" />
+          <NavItem icon={<FaHotel size={16} />} label="Hotels" flexDirection="flex-row" />
+          <NavItem icon={<FaHome size={16} />} label="Vacation rentals" flexDirection="flex-row" />
+        </div>
       </div>
       <div>
         <button className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
