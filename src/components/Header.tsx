@@ -1,10 +1,16 @@
+"use client";
+
 import { FaSearch, FaGlobe, FaPlane, FaHotel, FaHome } from "react-icons/fa";
+import dynamic from 'next/dynamic';
 import NavItem from "./NavItem";
-import PopularDestinations from "./PopularDestinations";
+
+const PopularDestinations = dynamic(() => import('./PopularDestinations'), {
+  ssr: false,
+});
 
 export default function Header() {
   return (
-    <header>
+    <header className="p-6">
       <picture>
         <source
           srcSet="https://www.gstatic.com/travel-frontend/animation/hero/flights_nc_dark_theme_4.svg"
