@@ -50,7 +50,7 @@ const customIcon = new Icon({
 
 export default function PopularDestinations() {
   return (
-    <div>
+    <div className="mt-4">
       <h2 className="text-2xl font-semibold mb-1">Popular destinations</h2>
       <p className="text-sm mb-6">Based on your location in ...</p>
 
