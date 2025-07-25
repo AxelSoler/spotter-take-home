@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FaSearch, FaGlobe, FaPlane, FaHotel, FaHome } from "react-icons/fa";
 import NavItem from "./NavItem";
+import PopularDestinations from "./PopularDestinations";
 
 export default function Header() {
   return (
@@ -29,6 +30,7 @@ export default function Header() {
         <NavItem icon={<FaHotel size={20} />} label="Hotels" />
         <NavItem icon={<FaHome size={20} />} label="Vacation rentals" />
       </div>
+      <PopularDestinations />
     </header>
   );
 }
