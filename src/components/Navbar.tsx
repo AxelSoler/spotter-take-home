@@ -38,26 +38,31 @@ export default function Navbar() {
               icon={<FaShoppingCart size={16} />}
               label="Travels"
               flexDirection="flex-row"
+              href="/"
             />
             <NavItem
               icon={<FaGlobe size={16} />}
               label="Explore"
               flexDirection="flex-row"
+              href="/explore"
             />
             <NavItem
               icon={<FaPlane size={16} />}
               label="Flights"
               flexDirection="flex-row"
+              href="/flights"
             />
             <NavItem
               icon={<FaHotel size={16} />}
               label="Hotels"
               flexDirection="flex-row"
+              href="/hotels"
             />
             <NavItem
               icon={<FaHome size={16} />}
               label="Vacation rentals"
               flexDirection="flex-row"
+              href="/rentals"
             />
           </div>
         </div>
@@ -78,26 +83,31 @@ export default function Navbar() {
             icon={<FaShoppingCart size={16} />}
             label="Travels"
             flexDirection="flex-row"
+            href="/"
           />
           <NavItem
             icon={<FaGlobe size={20} />}
             label="Explore"
             flexDirection="flex-row"
+            href="/explore"
           />
           <NavItem
             icon={<FaPlane size={20} />}
             label="Flights"
             flexDirection="flex-row"
+            href="/flights"
           />
           <NavItem
             icon={<FaHotel size={20} />}
             label="Hotels"
             flexDirection="flex-row"
+            href="/hotels"
           />
           <NavItem
             icon={<FaHome size={20} />}
             label="Vacation rentals"
             flexDirection="flex-row"
+            href="/rentals"
           />
         </div>
         <div className="py-4 border-t border-gray-300 space-y-4">
@@ -105,16 +115,19 @@ export default function Navbar() {
             icon={<FaCog size={16} />}
             label="Settings"
             flexDirection="flex-row"
+            href="/settings"
           />
           <NavItem
             icon={<FaCommentAlt size={20} />}
             label="Feedback"
             flexDirection="flex-row"
+            href="/feedback"
           />
           <NavItem
             icon={<FaQuestionCircle size={20} />}
             label="Help"
             flexDirection="flex-row"
+            href="/help"
           />
         </div>
       </nav>
