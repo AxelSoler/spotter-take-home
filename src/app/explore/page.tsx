@@ -1,9 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from "axios";
-import { customIcon } from "@/components/PopularDestinations";
+import dynamic from "next/dynamic";
+
+const SearchDestinations = dynamic(
+  () => import("@/components/SearchDestinations"),
+  {
+    ssr: false
+  }
+);
 
 interface Airport {
   skyId?: string;
@@ -215,26 +221,7 @@ export default function Explore() {
         </div>
       </div>
       <div className="w-3/4 h-full rounded-2xl hidden md:block">
-        <MapContainer
-          center={[location?.latitude || 20, location?.longitude || 0]}
-          zoom={location ? 7 : 3}
-          className="w-full h-full rounded-2xl"
-        >
-          <TileLayer
-            attribution="&copy; OpenStreetMap contributors"
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {location && (
-            <Marker
-              position={[location.latitude, location.longitude]}
-              icon={customIcon}
-            >
-              <Popup>
-                <strong>Tu ubicación</strong>
-              </Popup>
-            </Marker>
-          )}
-        </MapContainer>
+        <SearchDestinations location={location} />
       </div>
     </div>
   );

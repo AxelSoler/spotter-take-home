@@ -4,7 +4,6 @@ import Image from "next/image";
 import { FaHotel } from "react-icons/fa";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 export const destinations: {
   city: string;

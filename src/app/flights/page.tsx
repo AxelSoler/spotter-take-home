@@ -9,7 +9,6 @@ import {
   FaUser
 } from "react-icons/fa";
 import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 
 export default function Flights() {
   return (
