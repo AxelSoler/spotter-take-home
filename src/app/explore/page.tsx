@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaExchangeAlt, FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from "axios";
 import { customIcon } from "@/components/PopularDestinations";
-import "leaflet/dist/leaflet.css";
 
 interface Airport {
   skyId?: string;
@@ -24,6 +22,10 @@ export default function Explore() {
   const [nearbyAirports, setNearbyAirports] = useState<Airport[]>([]);
   const [loadingAirports, setLoadingAirports] = useState(false);
   const [airportError, setAirportError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<Airport[]>([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -51,9 +53,8 @@ export default function Explore() {
         `https://sky-scrapper.p.rapidapi.com/api/v1/flights/getNearByAirports?lat=${location.latitude}&lng=${location.longitude}`,
         {
           headers: {
-            "x-rapidapi-key":
-              "ff5c1935d1mshbcb01a1f12f6d6bp165040jsna142a1127723",
-            "x-rapidapi-host": "sky-scrapper.p.rapidapi.com"
+            "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+            "x-rapidapi-host": process.env.NEXT_PUBLIC_RAPIDAPI_HOST
           }
         }
       );
@@ -71,6 +72,40 @@ export default function Explore() {
       }
     } finally {
       setLoadingAirports(false);
+    }
+  };
+
+  const searchAirports = async () => {
+    if (!searchQuery.trim()) return;
+    setLoadingSearch(true);
+    setSearchError(null);
+    setSearchResults([]);
+    try {
+      const res = await axios.get(
+        `https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchAirport?query=${encodeURIComponent(
+          searchQuery
+        )}`,
+        {
+          headers: {
+            "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+            "x-rapidapi-host": process.env.NEXT_PUBLIC_RAPIDAPI_HOST
+          }
+        }
+      );
+      const data = res.data;
+      if (data.status && Array.isArray(data.data)) {
+        setSearchResults(data.data);
+      } else {
+        setSearchError("No airports found or invalid response.");
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setSearchError(err.message);
+      } else {
+        setSearchError("Error searching airports");
+      }
+    } finally {
+      setLoadingSearch(false);
     }
   };
 
@@ -130,58 +165,52 @@ export default function Explore() {
           </div>
         </div>
         <div className="bg-gray-800 text-white p-4 rounded-xl flex flex-col gap-3 mt-4">
-          <div className="flex items-center gap-4 text-sm">
-            <span className="flex items-center gap-2">
-              <FaExchangeAlt className="text-gray-400" />
-              Round trip
-            </span>
-            <span className="flex items-center gap-2">
-              <FaUser className="text-gray-400" />2
-            </span>
-            <span className="flex items-center gap-1">
-              Economy class
-              <span className="text-gray-400">▼</span>
-            </span>
+          <div className="font-bold mb-2">Search Airports</div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="New York, Buenos Aires..."
+              className="bg-gray-700 rounded px-3 py-2 text-white flex-1 placeholder:text-gray-400 outline-none"
+            />
+            <button
+              type="button"
+              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-bold"
+              onClick={searchAirports}
+              disabled={loadingSearch || !searchQuery.trim()}
+            >
+              {loadingSearch ? (
+                <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent" />
+              ) : (
+                "Search"
+              )}
+            </button>
           </div>
-
-          <div className="flex flex-wrap bg-gray-700 rounded-lg overflow-hidden">
-            <div className="flex items-center px-4 py-3 border-r border-gray-600 flex-1">
-              <input
-                type="text"
-                placeholder="City"
-                className="bg-transparent outline-none text-white flex-1 placeholder:text-gray-400"
-              />
-            </div>
-
-            <div className="flex items-center justify-center px-3 border-r border-gray-600 text-gray-400">
-              <FaExchangeAlt />
-            </div>
-
-            <div className="flex items-center px-4 py-3 border-r border-gray-600 flex-1">
-              <FaMapMarkerAlt className="text-gray-400 mr-2" />
-              <input
-                type="text"
-                placeholder="Where you want to go?"
-                className="bg-transparent outline-none text-white flex-1 placeholder:text-gray-400"
-              />
-            </div>
-
-            <div className="flex items-center">
-              <div className="flex items-center px-4 py-3 border-r border-gray-600 text-gray-400">
-                <input
-                  type="date"
-                  placeholder="Departure"
-                  className="bg-transparent outline-none text-white flex-1 placeholder:text-gray-400"
-                />
-              </div>
-              <div className="flex items-center px-4 py-3 text-gray-400">
-                <input
-                  type="date"
-                  placeholder="Return"
-                  className="bg-transparent outline-none text-white flex-1 placeholder:text-gray-400"
-                />
-              </div>
-            </div>
+          <div className="mt-2">
+            {searchError && (
+              <p className="text-red-400 text-sm">{searchError}</p>
+            )}
+            {!searchError && !loadingSearch && searchResults.length > 0 && (
+              <ul className="text-sm text-white divide-y divide-gray-700">
+                {searchResults.map((airport, idx) => (
+                  <li key={airport.skyId || idx} className="py-2">
+                    <span className="font-bold">
+                      {airport.presentation?.suggestionTitle ||
+                        airport.presentation?.title}
+                    </span>
+                    {airport.presentation?.subtitle && (
+                      <span className="ml-2 text-gray-400">
+                        ({airport.presentation.subtitle})
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {!searchError && !loadingSearch && searchResults.length === 0 && (
+              <p className="text-gray-400 text-xs">No airports found.</p>
+            )}
           </div>
         </div>
       </div>
@@ -196,7 +225,10 @@ export default function Explore() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {location && (
-            <Marker position={[location.latitude, location.longitude]} icon={customIcon}>
+            <Marker
+              position={[location.latitude, location.longitude]}
+              icon={customIcon}
+            >
               <Popup>
                 <strong>Tu ubicación</strong>
               </Popup>
