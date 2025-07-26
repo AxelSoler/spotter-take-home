@@ -1,16 +1,17 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { customIcon } from "./PopularDestinations";
 
-type Location = {
+export type Location = {
   latitude: number;
   longitude: number;
 };
 
 type Props = {
   location?: Location | null;
+  locations?: Location[] | null;
 };
 
-export default function SearchDestinations({ location }: Props) {
+export default function SearchDestinations({ location, locations }: Props) {
   return (
     <MapContainer
       center={[location?.latitude || 20, location?.longitude || 0]}
@@ -31,6 +32,18 @@ export default function SearchDestinations({ location }: Props) {
           </Popup>
         </Marker>
       )}
+      {locations &&
+        locations.map((place, index) => (
+          <Marker
+            key={index}
+            position={[place.latitude, place.longitude]}
+            icon={customIcon}
+          >
+            <Popup>
+              <strong>Location</strong>
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 }

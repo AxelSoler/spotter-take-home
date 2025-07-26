@@ -182,7 +182,7 @@ export default function Explore() {
             />
             <button
               type="button"
-              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-bold"
+              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-bold cursor-pointer"
               onClick={searchAirports}
               disabled={loadingSearch || !searchQuery.trim()}
             >
