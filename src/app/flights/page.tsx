@@ -1,16 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import NavItem from "@/components/NavItem";
 import {
   FaExchangeAlt,
   FaMapMarkerAlt,
-  FaCalendarAlt,
   FaSearch,
   FaUser
 } from "react-icons/fa";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import Link from "next/link";
 
 export default function Flights() {
   return (
@@ -101,7 +100,7 @@ export default function Flights() {
         </Link>
 
         <MapContainer
-          center={[20, 0]} // centrado en el mundo
+          center={[20, 0]}
           zoom={2}
           scrollWheelZoom={false}
           dragging={false}
