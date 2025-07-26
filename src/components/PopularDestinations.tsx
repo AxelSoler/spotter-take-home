@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const destinations: {
+export const destinations: {
   city: string;
   dates: string;
   description: string;
@@ -43,7 +43,7 @@ const destinations: {
   }
 ];
 
-const customIcon = new Icon({
+export const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // ícono azul como en el ejemplo
   iconSize: [25, 25]
 });
